@@ -3,6 +3,7 @@ use std::fmt::Debug;
 
 use super::*;
 
+#[allow(dead_code)]
 #[derive(Debug)]
 pub struct Json {
     format: Serializers,

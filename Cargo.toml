@@ -60,10 +60,10 @@ yaml_ser = ["serde_yaml"]
 
 [dev-dependencies]
 grcov = "0.8"
-tokio-test = "0.4.0"
+tokio-test = "0.4"
 
 [dev-dependencies.cargo-husky]
-version = "1"
+version = "1.5"
 default-features = false 
 features = ["prepush-hook", "run-cargo-fmt", "run-cargo-clippy"]
 

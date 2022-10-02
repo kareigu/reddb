@@ -323,7 +323,7 @@ where
 }
 
 #[cfg(test)]
-#[cfg_attr(not(feature = "ron_ser"), ignore)]
+#[cfg(feature = "ron_ser")]
 mod tests {
     use super::*;
     use crate::RonDb;
@@ -471,7 +471,8 @@ mod tests {
         );
         fs::remove_file(".delete_one.db.ron").unwrap();
     }
-
+    
+    #[tokio::test]
     async fn delete() {
         let db = RonDb::new::<TestStruct>(".delete.db").unwrap();
         let one = TestStruct {
