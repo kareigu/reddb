@@ -119,7 +119,7 @@ where
             .flat_map(|(id, data)| {
                 let data: T = self
                     .serializer
-                    .deserialize(&*data)
+                    .deserialize(data)
                     .map_err(|_| RedDbErrorKind::DataCorruption)
                     .unwrap();
 
@@ -153,7 +153,7 @@ where
             .await
             .map_err(|_| RedDbErrorKind::FlushData)?;
         storage
-            .write_all(&data)
+            .write_all(data)
             .await
             .map_err(|_| RedDbErrorKind::FlushData)?;
         storage
@@ -166,7 +166,7 @@ where
     async fn append(&self, data: &[u8]) -> Result<()> {
         let mut storage = self.db_file.lock().await;
         storage.seek(SeekFrom::End(0)).await.unwrap();
-        storage.write_all(&data).await.unwrap();
+        storage.write_all(data).await.unwrap();
         storage.sync_all().await.unwrap();
         Ok(())
     }

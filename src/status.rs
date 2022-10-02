@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, PartialEq, Deserialize)]
+#[derive(Debug, Clone, Serialize, Eq, PartialEq, Deserialize)]
 pub enum Status {
     In,
     Up,

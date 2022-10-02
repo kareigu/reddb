@@ -155,9 +155,9 @@ where
             .await
             .map_err(|_| RedDbErrorKind::PoisonedValue)?;
 
-        let data = data.get(&id).ok_or(RedDbErrorKind::NotFound { _id: *id })?;
+        let data = data.get(id).ok_or(RedDbErrorKind::NotFound { _id: *id })?;
 
-        let data = self.deserialize(&*data)?;
+        let data = self.deserialize(data)?;
         let doc = self.create_doc(id, data, Status::In);
         Ok(doc)
     }
@@ -173,7 +173,7 @@ where
 
         if data.contains_key(id) {
             let data = data
-                .get_mut(&id)
+                .get_mut(id)
                 .ok_or(RedDbErrorKind::NotFound { _id: *id })?;
 
             *data = self.serialize(&new_value)?;
@@ -221,7 +221,7 @@ where
         let docs: Vec<Document<T>> = data
             .iter()
             .map(|(id, data)| {
-                let data = self.deserialize(&*data).unwrap();
+                let data = self.deserialize(data).unwrap();
                 self.create_doc(id, data, Status::In)
             })
             .collect();
@@ -244,7 +244,7 @@ where
             .iter()
             .filter(|(_id, data)| **data == serialized)
             .map(|(_id, data)| {
-                let data = self.deserialize(&*data).unwrap();
+                let data = self.deserialize(data).unwrap();
                 self.create_doc(_id, data, Status::In)
             })
             .collect();
@@ -471,7 +471,7 @@ mod tests {
         );
         fs::remove_file(".delete_one.db.ron").unwrap();
     }
-    
+
     #[tokio::test]
     async fn delete() {
         let db = RonDb::new::<TestStruct>(".delete.db").unwrap();

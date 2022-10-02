@@ -4,7 +4,7 @@ use std::fmt::Debug;
 use crate::status::Status;
 use uuid::Uuid;
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
 pub struct Document<T> {
     pub _id: Uuid,
     pub data: T,
